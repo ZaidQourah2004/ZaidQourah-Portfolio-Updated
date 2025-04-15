@@ -1,0 +1,21 @@
+import { getPosts } from "@/app/utils/utils";
+import { baseURL, routes as routesConfig } from "@/app/resources";
+
+export default async function sitemap() {
+  // Skip blog posts since we don't have any
+  const blogs = [];
+
+  const works = getPosts(["src", "app", "work", "projects"]).map((post) => ({
+    url: `https://${baseURL}/work/${post.slug}`,
+    lastModified: post.metadata.publishedAt,
+  }));
+
+  const activeRoutes = Object.keys(routesConfig).filter((route) => routesConfig[route]);
+
+  const routes = activeRoutes.map((route) => ({
+    url: `https://${baseURL}${route !== "/" ? route : ""}`,
+    lastModified: new Date().toISOString().split("T")[0],
+  }));
+
+  return [...routes, ...blogs, ...works];
+}

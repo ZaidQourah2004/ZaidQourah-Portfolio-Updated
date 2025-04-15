@@ -1,0 +1,18 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "target": "es2020",
+    "loose": true,
+    "minify": {
+      "compress": true,
+      "mangle": true
+    }
+  },
+  "minify": true,
+  "module": {
+    "type": "es6"
+  }
+}

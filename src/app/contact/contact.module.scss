@@ -1,0 +1,22 @@
+.blockAlign {
+  margin: 0 auto;
+}
+
+.textAlign {
+  text-align: center;
+}
+
+.formContainer {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formContainer:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-l);
+}
+
+@media (max-width: 767px) {
+  .textAlign {
+    text-align: left;
+  }
+} 
