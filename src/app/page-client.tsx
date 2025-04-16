@@ -1,14 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Column } from "@/once-ui/components";
 import Link from "next/link";
 import { motion } from "motion/react";
 import dynamic from 'next/dynamic';
 
-// Use dynamic import with SSR disabled to prevent the component from running during server rendering
-const Vortex = dynamic(() => import('@/components/ui/vortex').then(mod => ({ default: mod.Vortex })), 
-  { ssr: false }
+// Lazy load the vortex with custom loading strategy
+const Vortex = dynamic(
+  () => import('@/components/ui/vortex').then(mod => ({ default: mod.Vortex })),
+  { 
+    ssr: false,
+    loading: () => null // Don't show any loader to avoid layout shifts
+  }
 );
 
 type Person = {
@@ -31,26 +35,69 @@ export default function ClientPage({
 }: {
   person?: Person;
 }) {
+  // State to control if vortex should render
+  const [shouldRenderVortex, setShouldRenderVortex] = useState(false);
+  // Detect if user prefers reduced motion
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  // Detect if device is likely low-powered
+  const [isLowPoweredDevice, setIsLowPoweredDevice] = useState(false);
+
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    // Listen for changes to the preference
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+    mediaQuery.addEventListener('change', handleMediaChange);
+    
+    // Heuristic check for low-powered devices
+    // Mobile devices or browsers with < 4 hardware concurrency are considered low-powered
+    setIsLowPoweredDevice(
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+      (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4)
+    );
+
+    // Only render vortex if:
+    // 1. User has been on the page for at least 1 second (prioritize main content first)
+    // 2. User doesn't prefer reduced motion
+    // 3. Device isn't detected as low-powered
+    const timer = setTimeout(() => {
+      // We'll render the vortex regardless of device power for now,
+      // but we'll use lowPerformanceMode for low-powered devices
+      setShouldRenderVortex(true);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      mediaQuery.removeEventListener('change', handleMediaChange);
+    };
+  }, []);
 
   return (
     <Column fillWidth>
       {/* Hero Section with Vortex Background */}
       <section className="w-full">
         <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-neutral-950 to-neutral-900">
-          {/* Single optimized vortex with reduced particles */}
-          <div className="absolute inset-0 w-full h-full">
-            <Vortex 
-              backgroundColor="transparent"
-              particleCount={100} // Reduced from 200
-              baseHue={220}
-              rangeY={150}
-              baseSpeed={0.08} // Slightly reduced
-              rangeSpeed={0.6} // Reduced from 0.8
-              baseRadius={1.8} // Increased from 1.5 for better visibility with fewer particles
-              rangeRadius={2.5}
-              containerClassName="absolute inset-0"
-            />
-          </div>
+          {/* Render vortex only after initial content is loaded and if appropriate */}
+          {shouldRenderVortex && !prefersReducedMotion && (
+            <div className="absolute inset-0 w-full h-full">
+              <Vortex 
+                backgroundColor="transparent"
+                particleCount={isLowPoweredDevice ? 50 : 80} // Further reduced for low-powered devices
+                baseHue={220}
+                rangeY={150}
+                baseSpeed={0.08}
+                rangeSpeed={0.5} // Slightly reduced for better performance
+                baseRadius={1.8}
+                rangeRadius={2.5}
+                containerClassName="absolute inset-0"
+                lowPerformanceMode={isLowPoweredDevice} // Enable low performance mode for low-powered devices
+              />
+            </div>
+          )}
           
           <div className="flex flex-col items-center justify-center min-h-screen relative z-10 px-4 py-12 md:px-8">
             {/* Title & Subtitle */}
