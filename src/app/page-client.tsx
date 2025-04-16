@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Column } from "@/once-ui/components";
 import Link from "next/link";
 import { motion } from "motion/react";
@@ -37,10 +37,14 @@ export default function ClientPage({
 }) {
   // State to control if vortex should render
   const [shouldRenderVortex, setShouldRenderVortex] = useState(false);
+  // State to control progressive enhancement of vortex features
+  const [enhancementLevel, setEnhancementLevel] = useState(0);
   // Detect if user prefers reduced motion
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   // Detect if device is likely low-powered
   const [isLowPoweredDevice, setIsLowPoweredDevice] = useState(false);
+  // Track if critical content has loaded
+  const contentLoaded = useRef(false);
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -60,21 +64,78 @@ export default function ClientPage({
       (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4)
     );
 
-    // Only render vortex if:
-    // 1. User has been on the page for at least 1 second (prioritize main content first)
-    // 2. User doesn't prefer reduced motion
-    // 3. Device isn't detected as low-powered
-    const timer = setTimeout(() => {
-      // We'll render the vortex regardless of device power for now,
-      // but we'll use lowPerformanceMode for low-powered devices
-      setShouldRenderVortex(true);
-    }, 1000);
+    // Mark critical content as loaded after paint
+    const markContentLoaded = () => {
+      contentLoaded.current = true;
+    };
+
+    // Use requestIdleCallback to load vortex only when browser is idle
+    const scheduleVortexLoad = () => {
+      if (typeof window.requestIdleCallback === 'function') {
+        // Use requestIdleCallback on browsers that support it
+        window.requestIdleCallback(
+          () => {
+            if (contentLoaded.current) {
+              setShouldRenderVortex(true);
+              
+              // Schedule progressive enhancement only on desktop
+              if (!isLowPoweredDevice) {
+                scheduleEnhancement();
+              }
+            } else {
+              // If content isn't loaded yet, try again later
+              setTimeout(scheduleVortexLoad, 100);
+            }
+          },
+          { timeout: 2000 } // 2 second timeout as fallback
+        );
+      } else {
+        // Fallback for browsers without requestIdleCallback
+        setTimeout(() => {
+          setShouldRenderVortex(true);
+        }, 1000);
+      }
+    };
+
+    // Progressive enhancement for desktops
+    const scheduleEnhancement = () => {
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(
+          () => {
+            // Increment enhancement level during idle time
+            setEnhancementLevel(prev => Math.min(prev + 1, 2));
+          },
+          { timeout: 3000 }
+        );
+      }
+    };
+
+    // Schedule events in order of priority
+    // 1. First, mark content as loaded after first meaningful paint
+    const paintTimer = setTimeout(markContentLoaded, 500);
+    
+    // 2. Then schedule vortex loading when browser is idle
+    const loadTimer = setTimeout(scheduleVortexLoad, 800);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(paintTimer);
+      clearTimeout(loadTimer);
       mediaQuery.removeEventListener('change', handleMediaChange);
     };
-  }, []);
+  }, [isLowPoweredDevice]);
+
+  // Calculate particle count based on device power and enhancement level
+  const getParticleCount = () => {
+    if (isLowPoweredDevice) return 50;
+    
+    // Progressive enhancement for desktop
+    switch (enhancementLevel) {
+      case 0: return 60;  // Initial state - minimal
+      case 1: return 80;  // Medium enhancement
+      case 2: return 100; // Full enhancement
+      default: return 60;
+    }
+  };
 
   return (
     <Column fillWidth>
@@ -86,15 +147,15 @@ export default function ClientPage({
             <div className="absolute inset-0 w-full h-full">
               <Vortex 
                 backgroundColor="transparent"
-                particleCount={isLowPoweredDevice ? 50 : 80} // Further reduced for low-powered devices
+                particleCount={getParticleCount()}
                 baseHue={220}
                 rangeY={150}
                 baseSpeed={0.08}
-                rangeSpeed={0.5} // Slightly reduced for better performance
+                rangeSpeed={0.5}
                 baseRadius={1.8}
                 rangeRadius={2.5}
                 containerClassName="absolute inset-0"
-                lowPerformanceMode={isLowPoweredDevice} // Enable low performance mode for low-powered devices
+                lowPerformanceMode={isLowPoweredDevice || enhancementLevel < 2}
               />
             </div>
           )}
