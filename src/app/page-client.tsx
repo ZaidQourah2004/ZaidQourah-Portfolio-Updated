@@ -2,10 +2,9 @@
 
 import React from "react";
 import { Column } from "@/once-ui/components";
-import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { CodeBlock } from "@/components/ui/code-block";
+import dynamic from 'next/dynamic';
 
 type Person = {
   firstName: string;
@@ -27,76 +26,15 @@ export default function ClientPage({
 }: {
   person?: Person;
 }) {
-  // Expanded bio code with additional functions for a richer snippet
-  const bioCode = `/**
- * @name ${person.firstName} ${person.lastName}
- * @role ${person.role}
- * @description
- *   Passionate about building robust web applications and exploring AI
- *   solutions that make an impact. Always open to learning new technologies.
- *
- * Core Skills:
- *   - Fullstack Development
- *   - AI & Machine Learning
- *   - Efficient Algorithms
- *   - Scalable Architecture
- */
-
-export function contactMe() {
-  // Let's connect and build something amazing!
-  return {
-    email: "qourahzaid04@gmail.com",
-    github: "github.com/ZaidQourah2004",
-    linkedin: "linkedin.com/in/zaid-qourah"
-  };
-}
-
-/**
- * @function navigate
- * @description
- *   Simulates terminal navigation. Logs the action and returns a redirect command.
- */
-export function navigate(path) {
-  const routes = {
-    "/about": "Detailed background information",
-    "/projects": "Showcase of projects",
-    "/contact": "Contact information"
-  };
-
-  console.log(\`Navigating to \${path}: \${routes[path]}\`);
-  return \`window.location.href = "\${path}"\`;
-}
-
-/**
- * @function runTests
- * @description
- *   Executes the full test suite and logs the results.
- */
-export function runTests() {
-  console.log("Running tests...");
-  const results = { passed: 25, failed: 0, total: 25, duration: "3s" };
-  console.log("All tests passed:", results);
-  return results;
-}
-
-/**
- * @function buildProject
- * @description
- *   Initiates a production build process for the project.
- */
-export function buildProject() {
-  console.log("Building project...");
-  setTimeout(() => {
-    console.log("Build completed successfully.");
-  }, 2000);
-}
-`;
 
   return (
     <Column fillWidth>
-      {/* Hero Section with Background Beams */}
+      {/* Hero Section with Simple Background */}
       <section className="w-full">
-        <BackgroundBeamsWithCollision className="min-h-screen">
+        <div className="min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900 relative flex items-center justify-center overflow-hidden">
+          {/* Simple background gradient effect instead of complex animation */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/20 via-purple-900/20 to-blue-900/20 opacity-50"></div>
+          
           <div className="flex flex-col items-center justify-center min-h-screen relative z-10 px-4 py-12 md:px-8">
             {/* Title & Subtitle */}
             <motion.div
@@ -105,10 +43,10 @@ export function buildProject() {
               transition={{ duration: 0.8 }}
               className="text-center mb-12"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-500 to-violet-500 mb-4">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
                 {person.firstName} {person.lastName}
               </h1>
-              <p className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto">
+              <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto">
                 {person.role}
               </p>
             </motion.div>
@@ -120,12 +58,6 @@ export function buildProject() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="w-full max-w-3xl mb-8 shadow-xl"
             >
-              <CodeBlock
-                language="javascript"
-                filename="portfolio.js"
-                highlightLines={[2, 3, 4, 10, 11, 12, 22, 23, 24, 31, 32, 33, 42, 43, 52, 53]}
-                code={bioCode}
-              />
             </motion.div>
 
             {/* Terminal-Style Container */}
@@ -383,7 +315,7 @@ export function buildProject() {
               </div>
             </motion.div>
           </div>
-        </BackgroundBeamsWithCollision>
+        </div>
       </section>
     </Column>
   );
