@@ -5,6 +5,7 @@ import { Column } from "@/once-ui/components";
 import Link from "next/link";
 import { motion } from "motion/react";
 import dynamic from 'next/dynamic';
+import { Vortex } from "@/components/ui/vortex";
 
 type Person = {
   firstName: string;
@@ -29,11 +30,37 @@ export default function ClientPage({
 
   return (
     <Column fillWidth>
-      {/* Hero Section with Simple Background */}
+      {/* Hero Section with Vortex Background */}
       <section className="w-full">
-        <div className="min-h-screen bg-gradient-to-b from-neutral-950 to-neutral-900 relative flex items-center justify-center overflow-hidden">
-          {/* Simple background gradient effect instead of complex animation */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/20 via-purple-900/20 to-blue-900/20 opacity-50"></div>
+        <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-neutral-950 to-neutral-900">
+          {/* Enhanced vortex effects */}
+          <div className="absolute inset-0 w-full h-full">
+            {/* Main vortex with larger particles */}
+            <Vortex 
+              backgroundColor="transparent"
+              particleCount={200}
+              baseHue={220}
+              rangeY={150}
+              baseSpeed={0.1}
+              rangeSpeed={0.8}
+              baseRadius={1.5}
+              rangeRadius={2.5}
+              containerClassName="absolute inset-0"
+            />
+            
+            {/* Secondary accent vortex with contrasting color */}
+            <Vortex 
+              backgroundColor="transparent"
+              particleCount={100}
+              baseHue={280}
+              rangeY={200}
+              baseSpeed={0.15}
+              rangeSpeed={0.6}
+              baseRadius={0.8}
+              rangeRadius={1.2}
+              containerClassName="absolute inset-0"
+            />
+          </div>
           
           <div className="flex flex-col items-center justify-center min-h-screen relative z-10 px-4 py-12 md:px-8">
             {/* Title & Subtitle */}
