@@ -5,7 +5,11 @@ import { Column } from "@/once-ui/components";
 import Link from "next/link";
 import { motion } from "motion/react";
 import dynamic from 'next/dynamic';
-import { Vortex } from "@/components/ui/vortex";
+
+// Use dynamic import with SSR disabled to prevent the component from running during server rendering
+const Vortex = dynamic(() => import('@/components/ui/vortex').then(mod => ({ default: mod.Vortex })), 
+  { ssr: false }
+);
 
 type Person = {
   firstName: string;
@@ -33,31 +37,17 @@ export default function ClientPage({
       {/* Hero Section with Vortex Background */}
       <section className="w-full">
         <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-neutral-950 to-neutral-900">
-          {/* Enhanced vortex effects */}
+          {/* Single optimized vortex with reduced particles */}
           <div className="absolute inset-0 w-full h-full">
-            {/* Main vortex with larger particles */}
             <Vortex 
               backgroundColor="transparent"
-              particleCount={200}
+              particleCount={100} // Reduced from 200
               baseHue={220}
               rangeY={150}
-              baseSpeed={0.1}
-              rangeSpeed={0.8}
-              baseRadius={1.5}
+              baseSpeed={0.08} // Slightly reduced
+              rangeSpeed={0.6} // Reduced from 0.8
+              baseRadius={1.8} // Increased from 1.5 for better visibility with fewer particles
               rangeRadius={2.5}
-              containerClassName="absolute inset-0"
-            />
-            
-            {/* Secondary accent vortex with contrasting color */}
-            <Vortex 
-              backgroundColor="transparent"
-              particleCount={100}
-              baseHue={280}
-              rangeY={200}
-              baseSpeed={0.15}
-              rangeSpeed={0.6}
-              baseRadius={0.8}
-              rangeRadius={1.2}
               containerClassName="absolute inset-0"
             />
           </div>

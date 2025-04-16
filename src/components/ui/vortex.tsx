@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createNoise3D } from "simplex-noise";
 import { motion } from "motion/react";
 
@@ -16,11 +16,15 @@ interface VortexProps {
   baseRadius?: number;
   rangeRadius?: number;
   backgroundColor?: string;
+  lowPerformanceMode?: boolean;
 }
 
 export const Vortex = (props: VortexProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef(null);
+  const animationRef = useRef<number | null>(null);
+  const [isInViewport, setIsInViewport] = useState(false);
+  
   const particleCount = props.particleCount || 700;
   const particlePropCount = 9;
   const particlePropsLength = particleCount * particlePropCount;
@@ -38,6 +42,8 @@ export const Vortex = (props: VortexProps) => {
   const yOff = 0.00125;
   const zOff = 0.0005;
   const backgroundColor = props.backgroundColor || "#000000";
+  const lowPerformanceMode = props.lowPerformanceMode || false;
+  
   let tick = 0;
   const noise3D = createNoise3D();
   let particleProps = new Float32Array(particlePropsLength);
@@ -59,19 +65,20 @@ export const Vortex = (props: VortexProps) => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (canvas && container) {
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d", { alpha: true });
 
       if (ctx) {
         resize(canvas, ctx);
         initParticles();
-        draw(canvas, ctx);
+        if (animationRef.current === null) {
+          draw(canvas, ctx);
+        }
       }
     }
   };
 
   const initParticles = () => {
     tick = 0;
-    // simplex = new SimplexNoise();
     particleProps = new Float32Array(particlePropsLength);
 
     for (let i = 0; i < particlePropsLength; i += particlePropCount) {
@@ -103,14 +110,21 @@ export const Vortex = (props: VortexProps) => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (backgroundColor !== "transparent") {
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     drawParticles(ctx);
-    renderGlow(canvas, ctx);
-    renderToScreen(canvas, ctx);
+    
+    if (!lowPerformanceMode) {
+      renderGlow(canvas, ctx);
+      renderToScreen(canvas, ctx);
+    }
 
-    window.requestAnimationFrame(() => draw(canvas, ctx));
+    if (isInViewport) {
+      animationRef.current = window.requestAnimationFrame(() => draw(canvas, ctx));
+    }
   };
 
   const drawParticles = (ctx: CanvasRenderingContext2D) => {
@@ -226,16 +240,62 @@ export const Vortex = (props: VortexProps) => {
     ctx.restore();
   };
 
+  const checkInViewport = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isVisible !== isInViewport) {
+      setIsInViewport(isVisible);
+    }
+  };
+
+  const handleResize = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (canvas && ctx) {
+      resize(canvas, ctx);
+    }
+  };
+
   useEffect(() => {
     setup();
-    window.addEventListener("resize", () => {
+    checkInViewport();
+    
+    let resizeTimer: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleResize, 100);
+    };
+    
+    window.addEventListener("resize", debouncedResize);
+    window.addEventListener("scroll", checkInViewport);
+
+    return () => {
+      if (animationRef.current !== null) {
+        window.cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+      window.removeEventListener("resize", debouncedResize);
+      window.removeEventListener("scroll", checkInViewport);
+      clearTimeout(resizeTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isInViewport && animationRef.current === null) {
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
       if (canvas && ctx) {
-        resize(canvas, ctx);
+        draw(canvas, ctx);
       }
-    });
-  }, []);
+    } else if (!isInViewport && animationRef.current !== null) {
+      window.cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+  }, [isInViewport]);
 
   return (
     <div className={cn("relative h-full w-full", props.containerClassName)}>
