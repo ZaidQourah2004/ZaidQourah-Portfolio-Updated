@@ -1,33 +1,57 @@
 # Zaid Qourah Portfolio
 
-A modern, performance-optimized personal portfolio website built with Next.js.
+A modern, performance-optimized, and beautifully crafted personal portfolio website built with Next.js and TailwindCSS. Showcasing projects, skills, and experiences in a clean, accessible, and responsive design.
 
-## 🚀 Technologies
+🌐 Live site: [zaidqourah.com](https://zaidqourah.com)
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Styling**: Custom components with TailwindCSS
+---
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router, React Server Components)
+- **Styling**: TailwindCSS + custom SCSS modules
+- **Animations**: Framer Motion
+- **Type System**: TypeScript
+- **UI Toolkit**: Custom `once-ui` component library
+- **Markdown Support**: MDX for content-rich project entries
 - **Deployment**: [Vercel](https://vercel.com)
-- **Content Management**: MDX for projects
+
+---
 
 ## ✨ Features
 
-- Responsive design optimized for all device sizes
-- Fast, accessible, and SEO-friendly
-- Interactive components with smooth animations
-- Lighthouse score optimized (100 for Accessibility, Best Practices, and SEO)
+- 📱 **Responsive Design**: Fully optimized across all devices
+- ⚡ **Performance First**: Fast load times with lighthouse-perfect scores
+- ♿ **Accessibility**: 100% score on Lighthouse audits
+- 🔍 **SEO Optimized**: Meta tags, structured data, and OpenGraph support
+- 🎨 **Custom Animations**: Smooth transitions powered by Framer Motion
+- 🧩 **Component Library**: Reusable, scalable components via `once-ui`
 
-## 📊 Performance Optimizations
+---
 
-Recent performance improvements include:
+## 📈 Performance Optimizations
 
-- Reduced Cumulative Layout Shift (CLS) by stabilizing layout elements
-- Optimized image loading with proper dimensions and placeholders
-- Improved footer stability with fixed dimensions
-- Locally hosted SVG icons instead of remote loading
-- CSS optimizations using critters for critical CSS
-- Preconnect to Google Fonts for faster font loading
+- 🚫 **Reduced CLS** by stabilizing dynamic layout regions
+- 🖼️ **Optimized Images** with native lazy loading and placeholders
+- 🧭 **Fixed Layout Shifts** (esp. in footer and about sections)
+- 🧬 **Critical CSS** inlined via `critters`
+- 🔗 **Preconnect & Preload** for Google Fonts
+- 📦 **SVG Icons** hosted locally to reduce network requests
 
-## 🧰 Development
+---
+
+## 📱 Mobile-First Experience
+
+Built with mobile users in mind:
+- No layout shift on interaction
+- Touch-friendly components
+- Adaptive typography and spacing
+
+---
+
+## 🧰 Getting Started
+
+Clone the project and get it running locally:
 
 ```bash
 # Install dependencies
@@ -43,21 +67,29 @@ npm run build
 npm run start
 ```
 
-## 📱 Mobile Optimizations
+---
 
-Special attention has been given to the mobile experience:
-- Fixed layout shifts in the About page
-- Optimized component rendering
-- Improved touch interactions
-- Responsive design for all screen sizes
+## 📁 Project Structure
 
-## 📖 Project Structure
+```bash
+src/
+├── app/              # Next.js App Router entry points
+├── components/       # Reusable UI components
+├── once-ui/          # Custom internal UI library
+├── styles/           # SCSS modules and global styles
+public/               # Static assets (images, fonts, icons)
+```
 
-- `src/app/*` - Next.js application routes
-- `src/components/*` - Reusable React components
-- `src/once-ui/*` - UI component library
-- `public/*` - Static assets (images, icons)
+---
 
 ## 📝 License
 
-MIT © Zaid Qourah
+MIT © [Zaid Qourah](https://github.com/ZaidQourah2004)
+
+---
+
+## 🙋‍♂️ Contact
+
+- 💼 [LinkedIn](https://www.linkedin.com/in/zaid-qourah)
+- 📧 qourahzaid04@gmail.com
+- 🌍 [Portfolio](https://zaidqourah.com)
