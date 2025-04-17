@@ -189,7 +189,7 @@
   border-bottom: 1px solid rgba(var(--neutral-border-rgb), 0.1);
   padding: 24px;
   animation: slideDown 0.3s ease-in-out;
-  z-index: 998;
+  z-index: 999; /* Ensure this is below the header but above everything else */
   max-height: 80vh; /* Make the menu smaller, taking up only 80% of the viewport height */
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -308,6 +308,14 @@
   /* Header styling in mobile */
   .header {
     background-color: rgba(var(--page-background-rgb), 0.95);
+    z-index: 1000 !important; /* Ensure z-index is respected in mobile */
+  }
+  
+  /* Ensure the mobile nav is positioned properly in all pages */
+  .mobileNav {
+    z-index: 999 !important;
+    position: fixed !important;
+    top: 64px !important;
   }
 }
 

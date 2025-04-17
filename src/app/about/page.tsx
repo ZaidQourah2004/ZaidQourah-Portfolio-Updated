@@ -117,7 +117,7 @@ export default function About() {
     },
   ];
   return (
-    <Column maxWidth="m">
+    <Column maxWidth="m" style={{ marginTop: '80px' }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -152,7 +152,7 @@ export default function About() {
           <TableOfContents structure={structure} about={about} />
         </Column>
       )}
-      <Flex fillWidth mobileDirection="column" horizontal="center" style={{ marginTop: '5rem' }}>
+      <Flex fillWidth mobileDirection="column" horizontal="center">
         {about.avatar.display && (
           <Column
             className={styles.avatar}

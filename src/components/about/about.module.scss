@@ -10,6 +10,7 @@
     position: sticky;
     height: fit-content;
     top: var(--static-space-64);
+    z-index: 1;
 }
 
 @media (--s) {

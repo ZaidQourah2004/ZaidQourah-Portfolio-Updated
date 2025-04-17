@@ -81,7 +81,7 @@ export const InfiniteMovingCards = ({
     return (
         <div
             ref={containerRef}
-            className={`scroller relative z-20 max-w-7xl overflow-hidden mx-auto ${className || ""}`}
+            className={`scroller relative z-10 max-w-7xl overflow-hidden mx-auto ${className || ""}`}
             style={{
                 maskImage: "linear-gradient(to right, transparent, white 20%, white 80%, transparent)"
             }}
@@ -113,7 +113,7 @@ export const InfiniteMovingCards = ({
                                  height={64} 
                                  className="mb-4"
                              />)}
-                            <span className="relative z-20 text-base text-gray-100 font-medium mt-2">
+                            <span className="relative z-10 text-base text-gray-100 font-medium mt-2">
                                 {item.name}
                             </span>
                         </div>
