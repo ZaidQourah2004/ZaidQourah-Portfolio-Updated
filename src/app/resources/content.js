@@ -8,6 +8,8 @@ const person = {
   },
   role: "Computer Science Engineering Student",
   avatar: "/images/ZQ1.png",
+  avatarWidth: 160,
+  avatarHeight: 160,
   location: "",
   citizenship: "US Citizen",
   citizenshipIcon: "🇺🇸",

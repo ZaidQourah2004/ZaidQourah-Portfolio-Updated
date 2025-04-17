@@ -116,7 +116,7 @@ export default function About() {
     },
   ];
   return (
-    <Column maxWidth="m" style={{ marginTop: '80px', overflowX: 'hidden' }}>
+    <Column maxWidth="m" style={{ marginTop: '80px', overflowX: 'hidden', minHeight: 'calc(100vh - 160px)' }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -170,13 +170,15 @@ export default function About() {
               borderRadius: '50%', 
               overflow: 'hidden',
               position: 'relative',
-              margin: '0 auto'
+              margin: '0 auto',
+              willChange: 'contents',
+              contain: 'strict'
             }}>
               <Image
                 src={person.avatar}
                 alt={`${person.firstName} ${person.lastName}`}
                 fill
-                sizes="(max-width: 768px) 160px, 160px"
+                sizes="160px"
                 style={{ 
                   objectFit: 'cover',
                   objectPosition: 'center'
@@ -185,6 +187,8 @@ export default function About() {
                 quality={75}
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEGQI4/9wnGQAAAABJRU5ErkJggg=="
+                width={person.avatarWidth}
+                height={person.avatarHeight}
               />
             </div>
             {person.location && (
@@ -354,13 +358,14 @@ export default function About() {
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="8">
                       <Flex gap="12" vertical="center" style={{ maxWidth: '75%' }}>
                         {companyLogos[experience.company] && (
-                          <div style={{ width: '40px', height: '40px', position: 'relative' }}>
+                          <div style={{ width: '40px', height: '40px', position: 'relative', flexShrink: 0 }}>
                             <Image 
                               src={companyLogos[experience.company]} 
                               alt={experience.company}
                               width={40}
                               height={40}
-                              style={{ objectFit: 'contain', width: 'auto', height: 'auto' }}
+                              style={{ objectFit: 'contain' }}
+                              loading="eager"
                             />
                           </div>
                         )}
@@ -574,8 +579,11 @@ export default function About() {
                         style={{ 
                           flexBasis: 'calc(50% - 8px)',
                           minHeight: '100px',
+                          height: '100px',
                           boxSizing: 'border-box',
-                          justifyContent: 'center'
+                          justifyContent: 'center',
+                          contain: 'layout style paint',
+                          willChange: 'contents'
                         }}
                       >
                         <div style={{ 
@@ -626,8 +634,11 @@ export default function About() {
                         style={{ 
                           flexBasis: 'calc(50% - 8px)',
                           minHeight: '100px',
+                          height: '100px',
                           boxSizing: 'border-box',
-                          justifyContent: 'center'
+                          justifyContent: 'center',
+                          contain: 'layout style paint',
+                          willChange: 'contents'
                         }}
                       >
                         <div style={{ 
