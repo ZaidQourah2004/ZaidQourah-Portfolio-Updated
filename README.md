@@ -8,12 +8,26 @@ A modern, performance-optimized, and beautifully crafted personal portfolio webs
 
 ## 🚀 Tech Stack
 
+<div align="center">
+
+![Next.js](https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=nextdotjs)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?style=for-the-badge&logo=vercel)
+![Framer Motion](https://img.shields.io/badge/Animations-Framer_Motion-0055FF?style=for-the-badge&logo=framer)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![MDX](https://img.shields.io/badge/Content-MDX-1B1F24?style=for-the-badge&logo=mdx)
+
+</div>
+
+---
+
 - **Framework**: [Next.js](https://nextjs.org/) (App Router, React Server Components)
-- **Styling**: TailwindCSS + custom SCSS modules
+- **Styling**: TailwindCSS + SCSS modules
 - **Animations**: Framer Motion
 - **Type System**: TypeScript
-- **UI Toolkit**: Custom `once-ui` component library
-- **Markdown Support**: MDX for content-rich project entries
+- **UI Toolkit**: [Once UI](https://once-ui.com)
+- **Content Management**: MDX
 - **Deployment**: [Vercel](https://vercel.com)
 
 ---
