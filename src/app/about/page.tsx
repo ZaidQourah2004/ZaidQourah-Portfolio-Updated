@@ -333,13 +333,13 @@ export default function About() {
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="8">
                       <Flex gap="12" vertical="center" style={{ maxWidth: '75%' }}>
                         {companyLogos[experience.company] && (
-                          <div style={{ width: '40px', height: '40px', position: 'relative', flexShrink: 0 }}>
+                          <div style={{ width: '40px', height: '40px', position: 'relative' }}>
                             <Image 
                               src={companyLogos[experience.company]} 
                               alt={experience.company}
                               width={40}
                               height={40}
-                              style={{ objectFit: 'contain' }}
+                              style={{ objectFit: 'contain', width: 'auto', height: 'auto' }}
                             />
                           </div>
                         )}
@@ -426,7 +426,7 @@ export default function About() {
                               alt={institution.name}
                               width={40}
                               height={40}
-                              style={{ objectFit: 'contain' }}
+                              style={{ objectFit: 'contain', width: 'auto', height: 'auto' }}
                             />
                           </div>
                         )}
@@ -557,14 +557,16 @@ export default function About() {
                         <img
                           src={skill.image}
                           alt={skill.name}
-                        style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(170%, -50%)',
-                          maxWidth: '100%',
-                          maxHeight: '100%',
-                        }}
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(170%, -50%)',
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                            width: 'auto',
+                            height: 'auto'
+                          }}
                         />
                         </div>
                         <Text variant="body-strong-s" style={{ textAlign: 'center' }}>{skill.name}</Text>
@@ -603,17 +605,19 @@ export default function About() {
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <img 
-                            src={framework.image} 
+                          <img
+                            src={framework.image}
                             alt={framework.name}
-                          style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(170%, -50%)',
-                            maxWidth: '100%',
-                            maxHeight: '100%',
-                          }}
+                            style={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(170%, -50%)',
+                              maxWidth: '100%',
+                              maxHeight: '100%',
+                              width: 'auto',
+                              height: 'auto'
+                            }}
                           />
                         </div>
                         <Text variant="body-strong-s" style={{ textAlign: 'center' }}>{framework.name}</Text>
