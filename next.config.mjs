@@ -10,13 +10,16 @@ const withMDX = mdx({
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.simpleicons.org",
-      },
-    ],
+    domains: [],
   },
+  experimental: {
+    optimizeCss: true,
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  reactStrictMode: true,
+  poweredByHeader: false,
 };
 
 const withBundleAnalyzer = bundleAnalyzer({

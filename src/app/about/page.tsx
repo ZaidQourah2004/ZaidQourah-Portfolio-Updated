@@ -20,39 +20,38 @@ import "@/styles/infinite-cards.css";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 const skills = [
-  { name: "Python", image: "https://cdn.simpleicons.org/python" },
+  { name: "Python", image: "/images/icons/python.svg" },
   { name: "Java", image: "/images/java.svg" },
-  { name: "JavaScript", image: "https://cdn.simpleicons.org/javascript" },
-  { name: "TypeScript", image: "https://cdn.simpleicons.org/typescript" },
-  { name: "MySQL", image: "https://cdn.simpleicons.org/mysql" },
-  { name: "C++", image: "https://cdn.simpleicons.org/cplusplus" },
-  { name: "Go", image: "https://cdn.simpleicons.org/go" },
-  { name: "Git", image: "https://cdn.simpleicons.org/git" },
-  { name: "MongoDB", image: "https://cdn.simpleicons.org/mongodb" },
-  { name: "PostgreSQL", image: "https://cdn.simpleicons.org/postgresql" },
-  { name: "Docker", image: "https://cdn.simpleicons.org/docker" },
+  { name: "JavaScript", image: "/images/icons/javascript.svg" },
+  { name: "TypeScript", image: "/images/icons/typescript.svg" },
+  { name: "MySQL", image: "/images/icons/mysql.svg" },
+  { name: "C++", image: "/images/icons/cplusplus.svg" },
+  { name: "Go", image: "/images/icons/go.svg" },
+  { name: "Git", image: "/images/icons/git.svg" },
+  { name: "MongoDB", image: "/images/icons/mongodb.svg" },
+  { name: "PostgreSQL", image: "/images/icons/postgresql.svg" },
+  { name: "Docker", image: "/images/icons/docker.svg" },
   { name: "Assembly", image: "/images/assembly.svg" },
-
 ];
 
 const frameworks = [
-  { name: "React", image: "https://cdn.simpleicons.org/react" },
-  { name: "Next.js", image: "https://cdn.simpleicons.org/nextdotjs" },
-  { name: "Spring", image: "https://cdn.simpleicons.org/spring" },
-  { name: "Django", image: "https://cdn.simpleicons.org/django" },
-  { name: "Flask", image: "https://cdn.simpleicons.org/flask" },
-  { name: "FastAPI", image: "https://cdn.simpleicons.org/fastapi" },
-  { name: "Tailwind CSS", image: "https://cdn.simpleicons.org/tailwindcss" },
-  { name: "Node.js", image: "https://cdn.simpleicons.org/nodedotjs" },
-  { name: "Svelte", image: "https://cdn.simpleicons.org/svelte" },
-  { name: "Ray", image: "https://cdn.simpleicons.org/ray" },
-  { name: "Ollama", image: "https://cdn.simpleicons.org/ollama" },
-  { name: "Firebase", image: "https://cdn.simpleicons.org/firebase" },
-  { name: "ScyllaDB", image: "https://cdn.simpleicons.org/scylladb" },
-  { name: "Pandas", image: "https://cdn.simpleicons.org/pandas" },
-  { name: "Numpy", image: "https://cdn.simpleicons.org/numpy" },
-  { name: "Sympy", image: "https://cdn.simpleicons.org/sympy" },
-  { name: "Scikit-Learn", image: "https://cdn.simpleicons.org/scikitlearn" },
+  { name: "React", image: "/images/icons/react.svg" },
+  { name: "Next.js", image: "/images/icons/nextdotjs.svg" },
+  { name: "Spring", image: "/images/icons/spring.svg" },
+  { name: "Django", image: "/images/icons/django.svg" },
+  { name: "Flask", image: "/images/icons/flask.svg" },
+  { name: "FastAPI", image: "/images/icons/fastapi.svg" },
+  { name: "Tailwind CSS", image: "/images/icons/tailwindcss.svg" },
+  { name: "Node.js", image: "/images/icons/nodedotjs.svg" },
+  { name: "Svelte", image: "/images/icons/svelte.svg" },
+  { name: "Ray", image: "/images/icons/ray.svg" },
+  { name: "Ollama", image: "/images/icons/ollama.svg" },
+  { name: "Firebase", image: "/images/icons/firebase.svg" },
+  { name: "ScyllaDB", image: "/images/icons/scylladb.svg" },
+  { name: "Pandas", image: "/images/icons/pandas.svg" },
+  { name: "Numpy", image: "/images/icons/numpy.svg" },
+  { name: "Sympy", image: "/images/icons/sympy.svg" },
+  { name: "Scikit-Learn", image: "/images/icons/scikitlearn.svg" },
 ];
 
 
@@ -183,6 +182,9 @@ export default function About() {
                   objectPosition: 'center'
                 }}
                 priority
+                quality={75}
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEGQI4/9wnGQAAAABJRU5ErkJggg=="
               />
             </div>
             {person.location && (
@@ -585,9 +587,12 @@ export default function About() {
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                        <img
+                        <Image
                           src={skill.image}
                           alt={skill.name}
+                          width={40}
+                          height={40}
+                          loading="lazy"
                           style={{
                             position: 'absolute',
                             top: '50%',
@@ -595,8 +600,6 @@ export default function About() {
                             transform: 'translate(170%, -50%)',
                             maxWidth: '100%',
                             maxHeight: '100%',
-                            width: 'auto',
-                            height: 'auto'
                           }}
                         />
                         </div>
@@ -636,9 +639,12 @@ export default function About() {
                           alignItems: 'center',
                           justifyContent: 'center'
                         }}>
-                          <img
+                          <Image
                             src={framework.image}
                             alt={framework.name}
+                            width={40}
+                            height={40}
+                            loading="lazy"
                             style={{
                               position: 'absolute',
                               top: '50%',
@@ -646,8 +652,6 @@ export default function About() {
                               transform: 'translate(170%, -50%)',
                               maxWidth: '100%',
                               maxHeight: '100%',
-                              width: 'auto',
-                              height: 'auto'
                             }}
                           />
                         </div>

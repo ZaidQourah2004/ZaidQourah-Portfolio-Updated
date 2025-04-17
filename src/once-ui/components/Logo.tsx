@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import classNames from "classnames";
 import styles from "./Logo.module.scss";
 import { SpacingToken } from "../types";
@@ -45,6 +46,8 @@ const Logo: React.FC<LogoProps> = ({
     }
   }, [icon, wordmark]);
 
+  const sizeValue = Number(sizeMap[size]);
+
   const content = (
     <>
       {icon && !iconSrc && (
@@ -56,14 +59,22 @@ const Logo: React.FC<LogoProps> = ({
         />
       )}
       {iconSrc && (
-        <img
-          style={{
-            height: `var(--static-space-${sizeMap[size]})`,
-            width: "auto",
-          }}
-          alt="Trademark"
-          src={iconSrc}
-        />
+        <div style={{ 
+          position: 'relative', 
+          height: `var(--static-space-${sizeMap[size]})`, 
+          width: 'auto' 
+        }}>
+          <Image
+            width={sizeValue}
+            height={sizeValue}
+            alt="Trademark"
+            src={iconSrc}
+            style={{
+              height: `var(--static-space-${sizeMap[size]})`,
+              width: "auto",
+            }}
+          />
+        </div>
       )}
       {wordmark && !wordmarkSrc && (
         <div
@@ -74,14 +85,22 @@ const Logo: React.FC<LogoProps> = ({
         />
       )}
       {wordmarkSrc && (
-        <img
-          style={{
-            height: `var(--static-space-${sizeMap[size]})`,
-            width: "auto",
-          }}
-          alt="Trademark"
-          src={wordmarkSrc}
-        />
+        <div style={{ 
+          position: 'relative', 
+          height: `var(--static-space-${sizeMap[size]})`, 
+          width: 'auto' 
+        }}>
+          <Image
+            width={sizeValue}
+            height={sizeValue}
+            alt="Trademark"
+            src={wordmarkSrc}
+            style={{
+              height: `var(--static-space-${sizeMap[size]})`,
+              width: "auto",
+            }}
+          />
+        </div>
       )}
     </>
   );

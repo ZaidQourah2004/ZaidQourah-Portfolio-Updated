@@ -14,6 +14,7 @@ import { Source_Code_Pro } from "next/font/google";
 
 import { person, home } from "@/app/resources/content";
 import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
+import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
@@ -158,6 +159,30 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           </Flex>
           <Footer />
           <Analytics />
+          
+          {/* Preload critical resources */}
+          <Script 
+            id="preload-fonts"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                // Preload important resources
+                const preloadLinks = [
+                  // Using the Google Fonts preconnect instead of trying to preload the specific font file
+                  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+                  { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' }
+                ];
+                
+                preloadLinks.forEach(attrs => {
+                  const link = document.createElement('link');
+                  Object.keys(attrs).forEach(key => {
+                    link.setAttribute(key, attrs[key]);
+                  });
+                  document.head.appendChild(link);
+                });
+              `
+            }}
+          />
         </Column>
       </ToastProvider>
     </Flex>
