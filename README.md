@@ -75,10 +75,16 @@ npm run start
 src/
 ├── app/              # Next.js App Router entry points
 ├── components/       # Reusable UI components
-├── once-ui/          # Custom internal UI library
+├── once-ui/          # External UI library (Once UI) - https://once-ui.com
 ├── styles/           # SCSS modules and global styles
 public/               # Static assets (images, fonts, icons)
 ```
+
+---
+
+## 🙌 Acknowledgements
+
+- [Once UI](https://once-ui.com) – for the beautifully crafted component library used throughout the project.
 
 ---
 
