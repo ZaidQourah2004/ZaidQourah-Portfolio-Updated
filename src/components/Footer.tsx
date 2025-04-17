@@ -16,7 +16,9 @@ export const Footer = () => {
       style={{ 
         marginTop: "auto",
         minHeight: "80px",
-        contain: "layout paint style"
+        height: "80px",
+        contain: "layout paint style size",
+        contentVisibility: "auto"
       }}
     >
       <Flex
@@ -29,7 +31,8 @@ export const Footer = () => {
         vertical="center"
         style={{
           width: "100%",
-          height: "auto"
+          height: "auto",
+          contain: "layout paint"
         }}
       >
         <Text variant="body-default-s" onBackground="neutral-strong" style={{ flexShrink: 0 }}>
@@ -52,7 +55,7 @@ export const Footer = () => {
           )}
         </Flex>
       </Flex>
-      <Flex height="80" show="s" style={{ flexShrink: 0 }}></Flex>
+      <Flex height="80" show="s" style={{ flexShrink: 0, display: "none" }}></Flex>
     </Flex>
   );
 };

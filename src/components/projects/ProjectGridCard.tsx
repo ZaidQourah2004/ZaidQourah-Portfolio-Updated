@@ -26,8 +26,12 @@ export const ProjectGridCard: React.FC<ProjectGridCardProps> = ({
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className={styles.image}
-          priority
-          quality={95}
+          priority={image.includes("greensync")}
+          quality={80}
+          loading={image.includes("greensync") ? "eager" : "lazy"}
+          fetchPriority={image.includes("greensync") ? "high" : "auto"}
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEGQI4/9wnGQAAAABJRU5ErkJggg=="
         />
         <div className={styles.overlay}>
           <Flex 
