@@ -486,7 +486,7 @@ export default function About() {
                               fontSize: '0.9rem'
                             }}
                           >
-                            Bachelor of Science,<br />Computer Science Engineering
+                          Computer Science Engineering
                           </Text>
                         </Column>
                         <Column gap="8" style={{ flex: '1 1 100%', marginBottom: '16px' }}>
