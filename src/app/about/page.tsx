@@ -117,7 +117,7 @@ export default function About() {
     },
   ];
   return (
-    <Column maxWidth="m" style={{ marginTop: '80px' }}>
+    <Column maxWidth="m" style={{ marginTop: '80px', overflowX: 'hidden' }}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -163,9 +163,28 @@ export default function About() {
             gap="m"
             flex={3}
             horizontal="center"
-            style={{ marginTop: '-1.5rem' }}
+            style={{ marginTop: '0' }}
           >
-            <Avatar src={person.avatar} size="xl" />
+            <div style={{ 
+              width: '160px', 
+              height: '160px', 
+              borderRadius: '50%', 
+              overflow: 'hidden',
+              position: 'relative',
+              margin: '0 auto'
+            }}>
+              <Image
+                src={person.avatar}
+                alt={`${person.firstName} ${person.lastName}`}
+                fill
+                sizes="(max-width: 768px) 160px, 160px"
+                style={{ 
+                  objectFit: 'cover',
+                  objectPosition: 'center'
+                }}
+                priority
+              />
+            </div>
             {person.location && (
               <Flex gap="8" vertical="center">
                 <Icon onBackground="accent-weak" name="globe" />
@@ -372,6 +391,10 @@ export default function About() {
                           as="li"
                           variant="body-default-m"
                           key={`${experience.company}-${index}`}
+                          style={{ 
+                            listStyleType: 'disc',  
+                            marginLeft: '20px' 
+                          }}
                         >
                           {achievement}
                         </Text>
@@ -417,8 +440,17 @@ export default function About() {
               <Column fillWidth gap="xl" marginBottom="80">
                 {about.studies.institutions.map((institution, index) => (
                   <Column key={`${institution.name}-${index}`} fillWidth>
-                    <Flex fillWidth horizontal="space-between" vertical="center" marginBottom="12">
-                      <Flex gap="12" vertical="center">
+                    <Flex
+                      fillWidth
+                      background="brand-alpha-weak" 
+                      border="brand-medium"
+                      radius="m"
+                      padding="24"
+                      direction="column"
+                      gap="20"
+                      style={{ overflowX: 'hidden' }}
+                    >
+                      <Flex gap="16" vertical="center">
                         {companyLogos[institution.name] && (
                           <div style={{ width: '40px', height: '40px', position: 'relative' }}>
                             <Image 
@@ -434,43 +466,42 @@ export default function About() {
                           {institution.name}
                         </Text>
                       </Flex>
-                    </Flex>
-                    {/* Redesigned education section with better layout */}
-                    <Column 
-                      style={{ 
-                        marginLeft: companyLogos[institution.name] ? '52px' : '0',
-                        background: 'var(--dynamic-background-brand-alpha-weak)',
-                        borderRadius: 'var(--static-radius-m)',
-                        padding: '20px',
-                        border: '1px solid var(--dynamic-border-brand-medium)'
-                      }}
-                    >
+                      
                       {/* Group Degree & Minor */}
-                      <Flex gap="32" wrap marginBottom="16">
-                        <Column gap="8" flex={1} minWidth={200}>
+                      <Flex gap="16" wrap marginTop="8">
+                        <Column gap="8" style={{ flex: '1 1 100%', marginBottom: '16px' }}>
                           <Text variant="body-strong-m">Major</Text>
-                          <Text variant="body-default-m">Bachelor of Science, Computer Science Engineering</Text>
+                          <Text 
+                            variant="body-default-m" 
+                            style={{ 
+                              wordBreak: 'break-word',
+                              hyphens: 'auto',
+                              fontSize: '0.9rem'
+                            }}
+                          >
+                            Bachelor of Science,<br />Computer Science Engineering
+                          </Text>
                         </Column>
-                        <Column gap="8" flex={1} minWidth={200}>
+                        <Column gap="8" style={{ flex: '1 1 100%', marginBottom: '16px' }}>
                           <Text variant="body-strong-m">Minor</Text>
                           <Text variant="body-default-m">Economics</Text>
                         </Column>
                       </Flex>
                       
                       {/* Group GPA & Graduation */}
-                      <Flex gap="32" wrap marginTop="16">
-                        <Column gap="8" flex={1} minWidth={200}>
+                      <Flex gap="16" wrap marginTop="8">
+                        <Column gap="8" style={{ flex: '1 1 100%', marginBottom: '16px' }}>
                           <Text variant="body-strong-m">GPA</Text>
                           <Text variant="body-default-m">3.98</Text>
                         </Column>
-                        <Column gap="8" flex={1} minWidth={200}>
+                        <Column gap="8" style={{ flex: '1 1 100%', marginBottom: '16px' }}>
                           <Text variant="body-strong-m">Expected Graduation</Text>
                           <Text variant="body-default-m">Fall 2025</Text>
                         </Column>
                       </Flex>
                       
                       {/* Add Relevant Coursework - slightly more spacing */}
-                      <Column gap="12" marginTop="24">
+                      <Column gap="12" marginTop="12">
                         <Text variant="body-strong-m">Relevant Coursework</Text>
                         <Flex wrap gap="8">
                           {[
@@ -488,7 +519,7 @@ export default function About() {
                           ))}
                         </Flex>
                       </Column>
-                    </Column>
+                    </Flex>
                   </Column>
                 ))}
               </Column>
@@ -503,10 +534,10 @@ export default function About() {
             <Column fillWidth gap="16">
               <Text variant="heading-strong-l" style={{ fontSize: "1.2rem" }}>Academic Achievements</Text>
               <Column as="ul" gap="16" style={{ marginTop: '8px' }}>
-                <Text as="li" variant="body-default-m">
+                <Text as="li" variant="body-default-m" style={{ listStyleType: 'disc', marginLeft: '20px' }}>
                   4x Dean's List
                 </Text>
-                <Text as="li" variant="body-default-m">
+                <Text as="li" variant="body-default-m" style={{ listStyleType: 'disc', marginLeft: '20px' }}>
                   MSU Academic Scholarship
                 </Text>
               </Column>
