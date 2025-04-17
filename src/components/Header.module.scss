@@ -22,13 +22,18 @@
 }
 
 .logo {
-  display: flex;
+  display: inline-block;
   align-items: center;
   text-decoration: none;
   color: var(--brand-on-background);
   transition: transform 0.2s ease, opacity 0.2s ease;
-  height: 100%;
   z-index: 1001;
+  height: 40px;
+  width: 200px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  margin-top: -5px;
 }
 
 .logo:hover {
@@ -41,6 +46,9 @@
   display: block;
   object-fit: contain;
   margin-top: 20px;
+  position: absolute;
+  top: -50px;
+  left: 0;
 }
 
 /* Desktop Navigation */
