@@ -13,7 +13,10 @@ const nextConfig = {
     domains: [],
   },
   experimental: {
-    optimizeCss: true,
+    optimizeCss: {
+      minify: true,
+      inlineFonts: false
+    }
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
