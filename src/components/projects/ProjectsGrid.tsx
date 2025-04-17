@@ -3,6 +3,11 @@
 import { Column, Flex, Heading, Text } from "@/once-ui/components";
 import { ProjectGridCard } from "./ProjectGridCard";
 import styles from "./ProjectsGrid.module.scss";
+import dynamic from 'next/dynamic';
+import { memo, useMemo } from 'react';
+
+// Dynamic import for ProjectGridCard with memo for better React rendering performance
+const MemoizedProjectCard = memo(ProjectGridCard);
 
 const projects = [
   {
@@ -88,32 +93,58 @@ export const ProjectsGrid: React.FC<ProjectsGridProps> = ({
   title = "My Projects",
   description
 }) => {
+  // Memoize projects to prevent unnecessary re-renders
+  const projectItems = useMemo(() => {
+    return projects.map((project, index) => (
+      <div key={index} className={styles.gridItem}>
+        <MemoizedProjectCard 
+          name={project.name}
+          image={project.image}
+          link={project.link}
+          description={project.description}
+        />
+      </div>
+    ));
+  }, []);
+  
   return (
     <Column fillWidth gap="xl" paddingX="l">
-      <Flex direction="column" horizontal="center" gap="l" paddingY="xl">
-        <Heading variant="display-strong-xl" className={styles.title}>
+      <Flex 
+        direction="column" 
+        horizontal="center" 
+        gap="l" 
+        paddingY="xl"
+      >
+        <Heading 
+          variant="display-strong-xl" 
+          className={styles.title}
+          // Add properties to optimize LCP
+          style={{ 
+            contain: 'layout paint style',
+            fontSize: '2.5rem',
+            textWrap: 'balance'
+          }}
+        >
           {title}
         </Heading>
         
         {description && (
-          <Text variant="display-default-s" onBackground="neutral-weak" className={styles.description}>
+          <Text 
+            variant="display-default-s" 
+            onBackground="neutral-weak" 
+            className={styles.description}
+          >
             {description}
           </Text>
         )}
       </Flex>
       
       <div className={styles.grid}>
-        {projects.map((project, index) => (
-          <div key={index} className={styles.gridItem}>
-            <ProjectGridCard 
-              name={project.name}
-              image={project.image}
-              link={project.link}
-              description={project.description}
-            />
-          </div>
-        ))}
+        {projectItems}
       </div>
     </Column>
   );
-}; 
+};
+
+// Default export for dynamic import support
+export default ProjectsGrid; 

@@ -15,6 +15,7 @@ import { Source_Code_Pro } from "next/font/google";
 import { person, home } from "@/app/resources/content";
 import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
 import Script from 'next/script';
+import { Suspense } from "react";
 
 export async function generateMetadata() {
   return {
@@ -47,6 +48,8 @@ const primary = Inter({
   variable: "--font-primary",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
+  fallback: ['system-ui', 'sans-serif']
 });
 
 type FontConfig = {
@@ -66,6 +69,7 @@ const code = Source_Code_Pro({
   variable: "--font-code",
   subsets: ["latin"],
   display: "swap",
+  preload: true
 });
 
 interface RootLayoutProps {
@@ -154,7 +158,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             horizontal="center"
           >
             <Flex horizontal="center" fillWidth minHeight="0">
-              <RouteGuard>{children}</RouteGuard>
+              <Suspense fallback={<div>Loading...</div>}>
+                <RouteGuard>{children}</RouteGuard>
+              </Suspense>
             </Flex>
           </Flex>
           <Footer />
@@ -168,9 +174,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               __html: `
                 // Preload important resources
                 const preloadLinks = [
-                  // Using the Google Fonts preconnect instead of trying to preload the specific font file
                   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-                  { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' }
+                  { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+                  { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' }
                 ];
                 
                 preloadLinks.forEach(attrs => {
@@ -179,6 +185,33 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                     link.setAttribute(key, attrs[key]);
                   });
                   document.head.appendChild(link);
+                });
+              `
+            }}
+          />
+
+          {/* Optimize JavaScript loading */}
+          <Script
+            id="javascript-optimization"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                // Defer non-critical JavaScript
+                function loadScript(src, async = true, defer = true) {
+                  const script = document.createElement('script');
+                  script.src = src;
+                  script.async = async;
+                  script.defer = defer;
+                  document.body.appendChild(script);
+                }
+                
+                // Add any third-party scripts that aren't critical
+                // for example: analytics, tracking, etc.
+                window.addEventListener('load', () => {
+                  setTimeout(() => {
+                    // Example: add any non-critical scripts here
+                    // loadScript('/path/to/non-critical.js');
+                  }, 1000);
                 });
               `
             }}
