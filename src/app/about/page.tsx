@@ -187,8 +187,6 @@ export default function About() {
                 quality={75}
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEGQI4/9wnGQAAAABJRU5ErkJggg=="
-                width={person.avatarWidth}
-                height={person.avatarHeight}
               />
             </div>
             {person.location && (
@@ -358,15 +356,35 @@ export default function About() {
                     <Flex fillWidth horizontal="space-between" vertical="end" marginBottom="8">
                       <Flex gap="12" vertical="center" style={{ maxWidth: '75%' }}>
                         {companyLogos[experience.company] && (
-                          <div style={{ width: '40px', height: '40px', position: 'relative', flexShrink: 0 }}>
-                            <Image 
-                              src={companyLogos[experience.company]} 
-                              alt={experience.company}
-                              width={40}
-                              height={40}
-                              style={{ objectFit: 'contain' }}
-                              loading="eager"
-                            />
+                          <div style={{ width: '40px', height: '40px', position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            {companyLogos[experience.company].includes('ql2.png') ? (
+                              // Special case for ql2.png that has aspect ratio warnings
+                              <img 
+                                src={companyLogos[experience.company]}
+                                alt={experience.company}
+                                style={{ 
+                                  maxWidth: '100%',
+                                  maxHeight: '100%',
+                                  objectFit: 'contain'
+                                }}
+                              />
+                            ) : (
+                              <Image 
+                                src={companyLogos[experience.company]} 
+                                alt={experience.company}
+                                width={40}
+                                height={40}
+                                unoptimized={companyLogos[experience.company].endsWith('.svg')}
+                                style={{ 
+                                  objectFit: 'contain',
+                                  maxWidth: '100%',
+                                  maxHeight: '100%',
+                                  width: 'auto',
+                                  height: 'auto'
+                                }}
+                                loading="eager"
+                              />
+                            )}
                           </div>
                         )}
                         <Text id={experience.company} variant="heading-strong-m" style={{ 
@@ -416,8 +434,10 @@ export default function About() {
                             radius="m"
                             //@ts-ignore
                             minWidth={image.width}
-                            //@ts-ignore
-                            height={image.height}
+                            style={{
+                              width: 'auto',
+                              height: 'auto'
+                            }}
                           >
                             <SmartImage
                               enlarge
@@ -428,6 +448,10 @@ export default function About() {
                               alt={image.alt}
                               //@ts-ignore
                               src={image.src}
+                              style={{
+                                width: 'auto',
+                                height: 'auto'
+                              }}
                             />
                           </Flex>
                         ))}
@@ -459,13 +483,18 @@ export default function About() {
                     >
                       <Flex gap="16" vertical="center">
                         {companyLogos[institution.name] && (
-                          <div style={{ width: '40px', height: '40px', position: 'relative' }}>
+                          <div style={{ width: '40px', height: '40px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Image 
                               src={companyLogos[institution.name]} 
                               alt={institution.name}
                               width={40}
                               height={40}
-                              style={{ objectFit: 'contain', width: 'auto', height: 'auto' }}
+                              unoptimized
+                              style={{ 
+                                objectFit: 'contain',
+                                maxWidth: '100%',
+                                maxHeight: '100%'
+                              }}
                             />
                           </div>
                         )}
@@ -579,7 +608,7 @@ export default function About() {
                         style={{ 
                           flexBasis: 'calc(50% - 8px)',
                           minHeight: '100px',
-                          height: '100px',
+                          height: '120px',
                           boxSizing: 'border-box',
                           justifyContent: 'center',
                           contain: 'layout style paint',
@@ -587,8 +616,8 @@ export default function About() {
                         }}
                       >
                         <div style={{ 
-                          width: '50px', 
-                          height: '50px', 
+                          width: '100%', 
+                          height: '40px', 
                           position: 'relative', 
                           marginBottom: '8px',
                           display: 'flex',
@@ -598,16 +627,16 @@ export default function About() {
                         <Image
                           src={skill.image}
                           alt={skill.name}
-                          width={40}
-                          height={40}
+                          width={60}
+                          height={60}
                           loading="lazy"
                           style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(170%, -50%)',
-                            maxWidth: '100%',
-                            maxHeight: '100%',
+                            width: 'auto',
+                            height: 'auto',
+                            maxWidth: '60px',
+                            maxHeight: '60px',
+                            margin: '0 auto',
+                            display: 'block'
                           }}
                         />
                         </div>
@@ -634,7 +663,7 @@ export default function About() {
                         style={{ 
                           flexBasis: 'calc(50% - 8px)',
                           minHeight: '100px',
-                          height: '100px',
+                          height: '120px',
                           boxSizing: 'border-box',
                           justifyContent: 'center',
                           contain: 'layout style paint',
@@ -642,8 +671,8 @@ export default function About() {
                         }}
                       >
                         <div style={{ 
-                          width: '50px', 
-                          height: '50px', 
+                          width: '100%', 
+                          height: '40px', 
                           position: 'relative', 
                           marginBottom: '8px',
                           display: 'flex',
@@ -653,16 +682,16 @@ export default function About() {
                           <Image
                             src={framework.image}
                             alt={framework.name}
-                            width={40}
-                            height={40}
+                            width={60}
+                            height={60}
                             loading="lazy"
                             style={{
-                              position: 'absolute',
-                              top: '50%',
-                              left: '50%',
-                              transform: 'translate(170%, -50%)',
-                              maxWidth: '100%',
-                              maxHeight: '100%',
+                              width: 'auto',
+                              height: 'auto',
+                              maxWidth: '60px',
+                              maxHeight: '60px',
+                              margin: '0 auto',
+                              display: 'block'
                             }}
                           />
                         </div>
