@@ -170,11 +170,13 @@
 .menuToggle {
   display: none;
   flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   background: transparent;
-  border: none;
+  border: 1px solid rgba(var(--neutral-border-rgb), 0.2);
+  border-radius: 50%;
   cursor: pointer;
   padding: 0;
   position: relative;
@@ -182,12 +184,21 @@
 }
 
 .bar {
-  width: 100%;
-  height: 3px;
+  width: 18px;
+  height: 2px;
   background-color: var(--brand-on-background);
   transition: all 0.3s ease-in-out;
   border-radius: 2px;
   margin: 2px 0;
+  position: absolute;
+}
+
+.bar:nth-child(1) {
+  transform: translateY(-4px);
+}
+
+.bar:nth-child(3) {
+  transform: translateY(4px);
 }
 
 /* Mobile Navigation */
@@ -297,11 +308,12 @@
     align-items: center;
     justify-content: center;
     margin-left: 8px;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(var(--neutral-background-rgb), 0.05);
-    border-radius: 5px;
-    padding: 5px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid rgba(var(--neutral-border-rgb), 0.2);
+    border-radius: 50%;
+    padding: 0;
   }
   
   /* Make theme toggle more visible in mobile */
@@ -314,7 +326,7 @@
   }
   
   .bar.open:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: rotate(45deg);
   }
   
   .bar.open:nth-child(2) {
@@ -322,7 +334,7 @@
   }
   
   .bar.open:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: rotate(-45deg);
   }
 
   /* Header styling in mobile */
@@ -350,11 +362,11 @@
   }
   
   .themeToggle, .menuToggle {
-    min-width: 44px;
-    min-height: 44px;
-    padding: 10px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
     margin: -5px;
-    background-color: rgba(var(--neutral-background-rgb), 0.05);
+    background-color: transparent;
   }
 }
 
